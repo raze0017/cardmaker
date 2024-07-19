@@ -1,0 +1,56 @@
+body {
+  background: linear-gradient(
+    to right,
+    #ff7e5f,
+    #feb47b
+  ); /* Replace with your desired gradient colors */
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+header {
+  width: 100%;
+  text-align: center;
+  padding: 10px;
+  font-size: 2em;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: rgb(44, 42, 42);
+}
+.container {
+  display: flex;
+  width: 100%;
+  height: 1000px;
+  margin-top: 20px;
+}
+.whiteboard-container {
+  flex: 1;
+  margin: 10px;
+  overflow-y: auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  background: linear-gradient(145deg, #ffffff, #e6e6e6);
+  transition: transform 0.2s;
+  margin-left: 300px;
+}
+.whiteboard-container:hover {
+  transform: scale(1.02);
+}
+
+.toolbar {
+  width: 250px;
+  padding: 20px;
+  border-left: 1px solid #ccc;
+  box-shadow: -2px 0 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-size: 20px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+.toolbar label,
+.toolbar input,
+.toolbar select,
+.toolbar button {
+  margin-bottom: 10px;
+}

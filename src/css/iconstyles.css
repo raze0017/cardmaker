@@ -1,0 +1,111 @@
+/* CSS */
+.button-75 {
+  align-items: center;
+  background-image: linear-gradient(135deg, #d72929 40%, #fc894d);
+  border: 0;
+  border-radius: 10px;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Codec cold', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  height: 54px;
+  justify-content: center;
+  letter-spacing: 0.4px;
+  line-height: 1;
+  padding: 3px 20px;
+  text-decoration: none;
+  text-transform: uppercase;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.button-75:active,
+.button-75:hover {
+  outline: 0;
+}
+
+.button-75:hover {
+  background-image: linear-gradient(135deg, #c82323 40%, #eb7e42);
+}
+
+.button-75:active {
+  background-image: linear-gradient(135deg, #b51f1f 40%, #da6e36);
+}
+
+.button-75 span {
+  transition: all 200ms;
+}
+
+.button-75:hover span {
+  transform: scale(0.9);
+  opacity: 0.75;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 16px;
+  font-family: 'Arial', sans-serif;
+  transition:
+    border-color 0.3s,
+    box-shadow 0.3s;
+}
+
+input:focus {
+  border-color: #4caf50;
+  box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+  outline: none;
+}
+
+select {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  font-size: 16px;
+  font-family: 'Arial', sans-serif;
+  appearance: none;
+  background-color: white;
+  background-image: url('data:image/svg+xml;charset=US-ASCII,%3csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20viewBox=%270%200%204%205%27%3e%3cpath%20fill=%27%23333%27%20d=%27M2%200L0%202h4L2%200zM2%205l2-2H0l2%202z%27/%3e%3c/svg%3e');
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 10px 10px;
+  transition:
+    border-color 0.3s,
+    box-shadow 0.3s;
+}
+
+select:focus {
+  border-color: #4caf50;
+  box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+  outline: none;
+}
+
+option {
+  padding: 10px;
+  font-size: 16px;
+  font-family: 'Arial', sans-serif;
+}
+
+form {
+  width: 300px;
+  margin: 0 auto;
+}
+
+form input,
+form select {
+  margin-bottom: 15px;
+}
+.color {
+  width: 40px;
+}
