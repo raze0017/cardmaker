@@ -1,2 +1,153 @@
 import './css/styles.css';
 import './css/iconstyles.css';
+document.addEventListener('DOMContentLoaded', () => {
+  let history = [];
+  let historyIndex = -1;
+  let selectedElement = null;
+
+  function makeDraggable(element) {
+    element.onmousedown = function (event) {
+      let shiftX = event.clientX - element.getBoundingClientRect().left;
+      let shiftY = event.clientY - element.getBoundingClientRect().top;
+
+      function moveAt(pageX, pageY) {
+        element.style.left = pageX - shiftX + 'px';
+        element.style.top = pageY - shiftY + 'px';
+      }
+
+      function onMouseMove(event) {
+        moveAt(event.pageX, event.pageY);
+      }
+
+      document.addEventListener('mousemove', onMouseMove);
+
+      element.onmouseup = function () {
+        document.removeEventListener('mousemove', onMouseMove);
+        element.onmouseup = null;
+        saveState();
+      };
+
+      element.ondragstart = function () {
+        return false;
+      };
+    };
+  }
+
+  function saveState() {
+    history = history.slice(0, historyIndex + 1);
+    history.push(document.querySelector('.whiteboard').innerHTML);
+    historyIndex++;
+  }
+
+  function undo() {
+    if (historyIndex > 0) {
+      historyIndex--;
+      document.querySelector('.whiteboard').innerHTML = history[historyIndex];
+      restoreDraggable();
+    }
+  }
+
+  function redo() {
+    if (historyIndex < history.length - 1) {
+      historyIndex++;
+      document.querySelector('.whiteboard').innerHTML = history[historyIndex];
+      restoreDraggable();
+    }
+  }
+
+  function restoreDraggable() {
+    const elements = document.querySelectorAll('.text-element');
+    elements.forEach(makeDraggable);
+  }
+
+  function updateFontColor() {
+    const col = document.getElementById('fontColor').value;
+    if (selectedElement) {
+      selectedElement.style.color = col;
+      saveState();
+    }
+  }
+
+  document
+    .getElementById('fontColor')
+    .addEventListener('input', updateFontColor);
+
+  const add = document.querySelector('#add');
+  add.addEventListener('click', () => {
+    const textElement = document.createElement('div');
+    textElement.contentEditable = true;
+    textElement.className = 'text-element';
+    textElement.style.fontSize = `${document.getElementById('fontSize').value}px`;
+    textElement.style.fontFamily = document.getElementById('fontFamily').value;
+    textElement.style.color = document.getElementById('fontColor').value;
+    textElement.innerText = 'Edit Me';
+    textElement.style.position = 'absolute';
+    textElement.style.left = '50px';
+    textElement.style.top = '50px';
+    document.querySelector('.whiteboard').appendChild(textElement);
+    makeDraggable(textElement);
+    selectElement(textElement);
+    saveState();
+  });
+
+  document.querySelector('.whiteboard').addEventListener('click', (e) => {
+    if (e.target.classList.contains('text-element')) {
+      selectElement(e.target);
+    } else {
+      if (selectedElement) {
+        selectedElement.classList.remove('selected');
+        selectedElement = null;
+      }
+    }
+  });
+
+  function selectElement(element) {
+    if (selectedElement) {
+      selectedElement.classList.remove('selected');
+    }
+    selectedElement = element;
+    selectedElement.classList.add('selected');
+
+    // Update toolbar inputs to match selected element's properties
+    document.getElementById('fontSize').value = parseInt(
+      window.getComputedStyle(selectedElement).fontSize
+    );
+    document.getElementById('fontFamily').value = window
+      .getComputedStyle(selectedElement)
+      .fontFamily.replace(/['"]/g, '');
+    document.getElementById('fontColor').value = rgbToHex(
+      window.getComputedStyle(selectedElement).color
+    );
+  }
+
+  function rgbToHex(rgb) {
+    let result = rgb.match(/\d+/g).map(function (x) {
+      return parseInt(x).toString(16).padStart(2, '0');
+    });
+    return `#${result.join('')}`;
+  }
+
+  saveState(); // Save initial empty state
+
+  document.getElementById('fontSize').addEventListener('input', () => {
+    if (selectedElement) {
+      selectedElement.style.fontSize = `${document.getElementById('fontSize').value}px`;
+      saveState();
+    }
+  });
+
+  document.getElementById('fontFamily').addEventListener('input', () => {
+    if (selectedElement) {
+      selectedElement.style.fontFamily =
+        document.getElementById('fontFamily').value;
+      saveState();
+    }
+  });
+
+  document
+    .querySelector('.toolbar button[onclick="undo()"]')
+    .addEventListener('click', undo);
+  document
+    .querySelector('.toolbar button[onclick="redo()"]')
+    .addEventListener('click', redo);
+});
