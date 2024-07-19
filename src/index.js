@@ -6,9 +6,11 @@ document.addEventListener('DOMContentLoaded', () => {
   let selectedElement = null;
 
   function makeDraggable(element) {
+    let shiftX, shiftY;
+
     element.onmousedown = function (event) {
-      let shiftX = event.clientX - element.getBoundingClientRect().left;
-      let shiftY = event.clientY - element.getBoundingClientRect().top;
+      shiftX = event.clientX - element.offsetLeft;
+      shiftY = event.clientY - element.offsetTop;
 
       function moveAt(pageX, pageY) {
         element.style.left = pageX - shiftX + 'px';
@@ -108,26 +110,12 @@ document.addEventListener('DOMContentLoaded', () => {
     selectedElement = element;
     selectedElement.classList.add('selected');
 
-    // Update toolbar inputs to match selected element's properties
     document.getElementById('fontSize').value = parseInt(
       window.getComputedStyle(selectedElement).fontSize
     );
-    document.getElementById('fontFamily').value = window
-      .getComputedStyle(selectedElement)
-      .fontFamily.replace(/['"]/g, '');
-    document.getElementById('fontColor').value = rgbToHex(
-      window.getComputedStyle(selectedElement).color
-    );
   }
 
-  function rgbToHex(rgb) {
-    let result = rgb.match(/\d+/g).map(function (x) {
-      return parseInt(x).toString(16).padStart(2, '0');
-    });
-    return `#${result.join('')}`;
-  }
-
-  saveState(); // Save initial empty state
+  saveState();
 
   document.getElementById('fontSize').addEventListener('input', () => {
     if (selectedElement) {
