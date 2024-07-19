@@ -50,6 +50,7 @@ header {
   align-items: flex-start;
   font-size: 20px;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  color: rgb(0, 0, 0);
 }
 .toolbar label,
 .toolbar input,
